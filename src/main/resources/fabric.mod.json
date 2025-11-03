@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "id": "predations",
-  "version": "1.0.0-BETA",
+  "version": "0.0.1-BETA",
   "name": "Predations",
   "description": "A comprehensive minecraft mod that overhaul passive animals to make the world harder and dynamic.",
   "authors": [
