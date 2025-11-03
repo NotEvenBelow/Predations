@@ -1,0 +1,8 @@
+{
+  "entity.predations.famished_cow": "Famished Cow",
+  "item.predations.burned_meat": "Burned Meat",
+  "item.predations.fox_feather": "Fox's Feather",
+  "item.predations.fox_talisman": "Fox's Talisman",
+  "entity.predations.predatory_squid": "This is the correct way to swim",
+  "entity.predations.predatory_glow_squid": "This is the correct way to swim (but glow)"
+}

@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "CSG",
+    "BFS",
+    "BBC"
+  ],
+  "key": {
+    "S": { "item": "minecraft:copper_ingot" },
+    "F": { "item": "minecraft:string" },
+    "G": { "item": "predations:fox_feather" },
+    "B": { "item": "minecraft:gold_ingot" },
+    "C": { "item": "minecraft:sweet_berries" }
+  },
+  "result": {
+    "item": "predations:fox_talisman",
+    "count": 1
+  }
+}
