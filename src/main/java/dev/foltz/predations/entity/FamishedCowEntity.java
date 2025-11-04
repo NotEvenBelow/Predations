@@ -56,14 +56,14 @@ public class FamishedCowEntity extends CowEntity {
         ));
     }
 
-    // === replacement logic ===
+
     public static void registerSpawnReplacement(EntityType<FamishedCowEntity> type) {
         ServerEntityEvents.ENTITY_LOAD.register((entity, world) -> {
-            // server-only; event supplies ServerWorld already
+
             var rare = ExtraConfig.get().rareVariants;
             if (!rare.famishedCowEnabled) return;
 
-            // only vanilla cow; do NOT replace mooshroom
+    
             if (entity.getType() != EntityType.COW) return;
             if (entity instanceof FamishedCowEntity) return;
 
