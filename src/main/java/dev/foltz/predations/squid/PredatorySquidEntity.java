@@ -20,12 +20,12 @@ public class PredatorySquidEntity extends SquidEntity implements HeadSuckable {
     private UUID targetUuid;
 
     public PredatorySquidEntity(EntityType<? extends SquidEntity> type, World world) {
-        super(type, world); // keeps vanilla squid animation + controllers
+        super(type, world); 
     }
 
     @Override
     protected void initGoals() {
-        super.initGoals(); // vanilla squid goals
+        super.initGoals(); 
         this.goalSelector.add(1, new HeadSuckGoal<>(this));
         this.goalSelector.add(5, new SwimAroundGoal(this, 1.0, 10));
         this.goalSelector.add(6, new LookAtEntityGoal(this, PlayerEntity.class, 6.0f));
@@ -38,7 +38,7 @@ public class PredatorySquidEntity extends SquidEntity implements HeadSuckable {
                 .add(EntityAttributes.GENERIC_ATTACK_DAMAGE, 2.0);
     }
 
-    // --- HeadSuckable impl ---
+    
     @Override public void setLatched(boolean latched) { this.latched = latched; }
     @Override public boolean isLatched() { return latched; }
 
