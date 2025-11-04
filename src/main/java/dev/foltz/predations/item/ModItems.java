@@ -13,7 +13,7 @@ import net.minecraft.util.Identifier;
 public final class ModItems {
     private ModItems() {}
 
-    // 🔥 Burned Meat
+
     public static final Item BURNED_MEAT = new Item(new Item.Settings().food(
             new FoodComponent.Builder()
                     .hunger(1)
@@ -26,12 +26,12 @@ public final class ModItems {
                     .build()
     ));
 
-    // 🦊 Fox Feather
+
     public static final Item FOX_FEATHER = new Item(
             new Item.Settings().maxCount(64)
     );
 
-    // 🦊 Fox Talisman (durability comes from config)
+  
     public static final Item FOX_TALISMAN = new FoxTalismanItem(
             new Item.Settings().maxCount(1)
     );
