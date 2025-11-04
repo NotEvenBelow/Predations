@@ -16,11 +16,7 @@ import net.minecraft.util.Identifier;
 import java.util.HashMap;
 import java.util.Map;
 
-/**
- * Replaces campfire recipes whose INPUT matches BurnedMeatHelper burn list
- * with ChanceCampfireRecipe using BurnedMeatHelper.campfireBurnChance().
- * Copies RecipeManager's immutable maps → mutates → sets back (no crashes).
- */
+
 public final class CampfireRecipePatch {
     private CampfireRecipePatch() { }
 
@@ -34,14 +30,14 @@ public final class CampfireRecipePatch {
         RecipeManager manager = server.getRecipeManager();
         RecipeManagerAccessor acc = (RecipeManagerAccessor) manager;
 
-        // copy outer map to mutable
+       
         Map<RecipeType<?>, Map<Identifier, Recipe<?>>> src = acc.getRecipes();
         Map<RecipeType<?>, Map<Identifier, Recipe<?>>> mutable = new HashMap<>(src.size());
         for (var e : src.entrySet()) {
             mutable.put(e.getKey(), new HashMap<>(e.getValue()));
         }
 
-        // we also iterate the original (immutable) campfire view to avoid CME while editing 'mutable'
+        
         Map<Identifier, Recipe<?>> campfireOrig = src.get(RecipeType.CAMPFIRE_COOKING);
         if (campfireOrig == null || campfireOrig.isEmpty()) {
             acc.setRecipes(mutable);
@@ -56,20 +52,19 @@ public final class CampfireRecipePatch {
             if (!(r instanceof CampfireCookingRecipe original)) continue;
             if (original.getIngredients().isEmpty()) continue;
 
-            // check input (first ingredient) against our burn list
+            
             Ingredient in = original.getIngredients().get(0);
             ItemStack[] matches = in.getMatchingStacks();
             if (matches.length == 0) continue;
             if (!BurnedMeatHelper.isBurnInsteadItem(matches[0].getItem())) continue;
 
-            // cooked output from vanilla recipe (needed by the chance recipe)
+            
             ItemStack cookedOut = original.getOutput(server.getRegistryManager());
 
             int cookTime = original.getCookTime();
             float xp     = original.getExperience();
 
-            // Your ChanceCampfireRecipe constructor (7 args):
-            // (Identifier id, CookingRecipeCategory cat, Ingredient in, ItemStack cookedOut, float xp, int cookTime, float burnChance)
+            
             ChanceCampfireRecipe replacement = new ChanceCampfireRecipe(
                     id,
                     CookingRecipeCategory.FOOD,
@@ -83,7 +78,7 @@ public final class CampfireRecipePatch {
             campfireMut.put(id, replacement);
         }
 
-        // swap back in (avoid ImmutableMap mutation)
+        
         acc.setRecipes(mutable);
     }
 }
