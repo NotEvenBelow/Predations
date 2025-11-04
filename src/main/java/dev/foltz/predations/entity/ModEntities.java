@@ -21,10 +21,9 @@ public final class ModEntities {
             );
 
     public static void register() {
-        // attributes
+
         FabricDefaultAttributeRegistry.register(FAMISHED_COW, FamishedCowEntity.createAttributes());
 
-        // spawn replacement
         FamishedCowEntity.registerSpawnReplacement(FAMISHED_COW);
     }
 }
