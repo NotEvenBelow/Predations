@@ -18,7 +18,7 @@ public class PredatoryGlowSquidEntity extends GlowSquidEntity implements HeadSuc
     private UUID targetUuid;
 
     public PredatoryGlowSquidEntity(EntityType<? extends GlowSquidEntity> type, World world) {
-        super(type, world); // keeps vanilla glow squid animation + controllers
+        super(type, world); 
     }
 
     @Override
@@ -36,7 +36,7 @@ public class PredatoryGlowSquidEntity extends GlowSquidEntity implements HeadSuc
                 .add(EntityAttributes.GENERIC_ATTACK_DAMAGE, 2.0);
     }
 
-    // --- HeadSuckable impl ---
+ 
     @Override public void setLatched(boolean latched) { this.latched = latched; }
     @Override public boolean isLatched() { return latched; }
 
