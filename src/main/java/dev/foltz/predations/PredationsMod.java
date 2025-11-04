@@ -25,27 +25,27 @@ public final class PredationsMod implements ModInitializer {
 
     @Override
     public void onInitialize() {
-        // load configs
+        
         ConfigManager.load();
         ExtraConfig.load();
         LootModifierConfig.load();
 
-        // register items & recipes
+        
         ModItems.register();
         CampfireRecipePatch.register();
 
-        // register ARFY logic
+        
         ARFYInstaller.register();
         CowInstaller.register();
 
 
-        // tick-based helpers
+        
         ServerTickEvents.END_SERVER_TICK.register(server -> {
-            TalismanImmunityTracker.tick();  // talisman immunity decay
-                    // burned meat rolling system
+            TalismanImmunityTracker.tick();  
+                    
         });
 
-        // loot modifications
+        
         LootModifier.init();
 
         FishToSquidSwap.register();
