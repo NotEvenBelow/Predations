@@ -43,16 +43,13 @@ public abstract class MobAggressionMixin {
             if (!hasMelee) goalSel.add(2, new MeleeAttackGoal(pathAware, 1.2, true));
         }
 
-        // normalize prey ids
         Set<String> lowered = preyIds.stream()
                 .map(s -> s.trim().toLowerCase(Locale.ROOT))
                 .collect(java.util.stream.Collectors.toSet());
 
-        // remove old goals
         ((GoalSelectorAccessor) targetSel).predations$getGoals()
                 .removeIf(pg -> pg.getGoal() instanceof PredationsHardTargetGoal);
 
-        // add our goal
         targetSel.add(3, new PredationsHardTargetGoal(self, lowered, 10));
 
         Identifier id = Registries.ENTITY_TYPE.getId(self.getType());
