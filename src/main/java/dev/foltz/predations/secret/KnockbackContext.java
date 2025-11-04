@@ -1,9 +1,6 @@
 package dev.foltz.predations.secret;
 
-/**
- * Thread-local flag used by PlayerAttackNoKnockbackMixin to tell
- * LivingEntityNoKnockbackMixin whether to cancel knockback.
- */
+
 public final class KnockbackContext {
     private static final ThreadLocal<Boolean> NO_KB = ThreadLocal.withInitial(() -> Boolean.FALSE);
 
