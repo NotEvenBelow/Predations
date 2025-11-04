@@ -23,11 +23,10 @@ import java.util.Queue;
 
 public class FoxTalismanItem extends Item {
     public FoxTalismanItem(Settings settings) {
-        super(settings.maxCount(1)); // unstackable
+        super(settings.maxCount(1)); 
         ServerTickEvents.END_SERVER_TICK.register(server -> tickTasks());
     }
 
-    // ---- tiny delayed scheduler (for spaced sounds) ----
     private static final Queue<DelayedTask> TASKS = new ArrayDeque<>();
     private static void schedule(Runnable r, int delayTicks) { TASKS.add(new DelayedTask(r, delayTicks)); }
     private static void tickTasks() {
@@ -47,17 +46,16 @@ public class FoxTalismanItem extends Item {
             var cfg = ExtraConfig.get().foxItems;
             if (!cfg.FoxTalismanFunctionEnabled) return TypedActionResult.pass(stack);
 
-            // cooldown
+
             user.getItemCooldownManager().set(this, Math.max(1, cfg.TalismanCooldowninSecond) * 20);
 
-            // 🟢 always grant squid immunity using PredatorySquidConfig
             int immunityTicks = 20 * ExtraConfig.get().foxItems.TalismanSquidImmunityTimeInSecond;
             TalismanImmunityTracker.setImmune(user, immunityTicks);
 
-            // also apply any extra configured status effects (except squid immunity)
+       
             cfg.TalismanEffects.forEach(entry -> {
                 if ("squid_immunity".equals(entry.effectId)) {
-                    // skip, handled by config int above
+                 
                     return;
                 }
                 var effect = Registries.STATUS_EFFECT.get(new Identifier(entry.effectId));
@@ -71,12 +69,12 @@ public class FoxTalismanItem extends Item {
                 }
             });
 
-            // force-unlatch any squid currently attached to this player
+            
             forceUnlatchNearbySquid(user, 8.0);
 
-            // spaced glass sounds: 0, 0.3s, 0.6s
+          
             for (int i = 0; i < 3; i++) {
-                int delay = i * 6; // 6 ticks = 0.3s
+                int delay = i * 6; 
                 float pitch = 1.0f + 0.05f * i;
                 schedule(() -> world.playSound(null, user.getBlockPos(),
                         SoundEvents.BLOCK_GLASS_BREAK, SoundCategory.PLAYERS, 1.0f, pitch), delay);
@@ -86,7 +84,7 @@ public class FoxTalismanItem extends Item {
             int maxUses = Math.max(1, cfg.TalismanUseTime);
             stack.setDamage(stack.getDamage() + 1);
 
-            // last-use texture swap using CustomModelData
+      
             if (maxUses > 1) {
                 if (stack.getDamage() == maxUses - 1) {
                     stack.getOrCreateNbt().putInt("CustomModelData", 1);
@@ -113,17 +111,17 @@ public class FoxTalismanItem extends Item {
             if (s instanceof HeadSuckable hs) {
                 var tgt = hs.getTargetUuid();
                 if (hs.isLatched() && tgt != null && tgt.equals(user.getUuid())) {
-                    // clear latch state
+                   
                     hs.setLatched(false);
                     hs.setTongueActive(false);
                     hs.setTargetUuid(null);
                     s.setNoGravity(false);
                     s.getNavigation().stop();
 
-                    // also clear claim map so psychic hold drops
+                    
                     HeadSuckGoal.CLAIMED.remove(user.getUuid());
 
-                    // little nudge away
+                    
                     s.addVelocity(0, 0.4, 0);
                     s.velocityModified = true;
                 }
