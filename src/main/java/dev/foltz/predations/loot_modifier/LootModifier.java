@@ -22,12 +22,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 
-/**
- * Reads config/predation_loot_modifier.json and replaces entity loot tables per config.
- * - rule.enabled=false or missing -> keep vanilla
- * - rule.enabled=true with empty drops -> drop nothing
- * - rule.enabled=true with drops -> only configured items drop
- */
+
 public final class LootModifier {
     private static LootModifierConfig CFG;
     private static final Map<Identifier, LootModifierConfig.Rule> BY_LOOT_TABLE = new HashMap<>();
@@ -64,7 +59,7 @@ public final class LootModifier {
 
                 ItemEntry.Builder<?> entry = ItemEntry.builder(maybeItem.get());
 
-                // count
+                
                 if (d.min == d.max) {
                     if (d.min != 1.0f) {
                         entry.apply(SetCountLootFunction.builder(ConstantLootNumberProvider.create(d.min)));
@@ -75,7 +70,7 @@ public final class LootModifier {
                     entry.apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(min, max)));
                 }
 
-                // override if on fire
+                
                 if (d.itemDroppedOnFire != null && !d.itemDroppedOnFire.isEmpty()) {
                     Optional<Item> cooked = Registries.ITEM.getOrEmpty(new Identifier(d.itemDroppedOnFire));
                     if (cooked.isPresent()) {
@@ -89,7 +84,7 @@ public final class LootModifier {
                     }
                 }
 
-                // chance
+                
                 float p = Math.max(0f, Math.min(1f, d.chance));
                 LootPool.Builder pool = LootPool.builder().rolls(ConstantLootNumberProvider.create(1.0f));
                 if (p < 1f) {
