@@ -8,10 +8,7 @@ import net.minecraft.entity.mob.MobEntity;
 import net.minecraft.entity.mob.PathAwareEntity;
 import net.minecraft.server.world.ServerWorld;
 
-/**
- * Standalone tick handler for attaching ConsumeNearbyItemsGoal to eligible mobs.
- * No dependency on ARFYInstaller.
- */
+
 public final class ConsumeHandler {
     private ConsumeHandler() {}
 
