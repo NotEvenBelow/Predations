@@ -10,11 +10,7 @@ import net.minecraft.registry.DynamicRegistryManager;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.random.Random;
 
-/**
- * Campfire recipe that rolls per craft: cooked vs burned.
- * Constructor signature matches 1.20.1:
- * (id, category, ingredient, output, xp, cookTime, burnChance)
- */
+
 public final class ChanceCampfireRecipe extends CampfireCookingRecipe {
     private final float burnChance;
     private final ItemStack cookedOut;
