@@ -37,12 +37,12 @@ public final class ModSquidEntities {
                         .build()
         );
 
-        // Attributes (REQUIRED)
+        
         FabricDefaultAttributeRegistry.register(PREDATORY_SQUID, PredatorySquidEntity.createAttributes());
         FabricDefaultAttributeRegistry.register(PREDATORY_GLOW_SQUID, PredatoryGlowSquidEntity.createAttributes());
 
         if (ExtraConfig.get().predatorySquid.enabled) {
-            // Spawns
+           
             BiomeModifications.addSpawn(BiomeSelectors.all(), SpawnGroup.WATER_CREATURE, PREDATORY_SQUID, 10, 1, 3);
             BiomeModifications.addSpawn(BiomeSelectors.all(), SpawnGroup.WATER_CREATURE, PREDATORY_GLOW_SQUID, 8, 1, 2);
 
