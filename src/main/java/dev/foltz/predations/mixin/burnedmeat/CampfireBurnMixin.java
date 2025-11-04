@@ -1,7 +1,6 @@
 package dev.foltz.predations.mixin.burnedmeat;
 
 import dev.foltz.predations.item.BurnedMeatHelper;
-// import dev.foltz.predations.item.ModItems; // No longer needed
 import net.minecraft.block.entity.CampfireBlockEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -22,7 +21,7 @@ import java.util.Optional;
 @Mixin(CampfireBlockEntity.class)
 public abstract class CampfireBurnMixin {
     private static final Random RNG = Random.create();
-    private static Item PREDATIONS_BURNED_MEAT = null; // Cache the item
+    private static Item PREDATIONS_BURNED_MEAT = null; 
 
     private Item getBurnedMeatItem() {
         if (PREDATIONS_BURNED_MEAT == null) {
