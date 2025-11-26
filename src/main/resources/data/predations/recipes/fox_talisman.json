@@ -7,7 +7,7 @@
   ],
   "key": {
     "S": { "item": "minecraft:copper_ingot" },
-    "F": { "item": "minecraft:string" },
+    "F": { "item": "minecraft:iron_ingot" },
     "G": { "item": "predations:fox_feather" },
     "B": { "item": "minecraft:gold_ingot" },
     "C": { "item": "minecraft:sweet_berries" }

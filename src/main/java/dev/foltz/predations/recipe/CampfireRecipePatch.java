@@ -30,14 +30,12 @@ public final class CampfireRecipePatch {
         RecipeManager manager = server.getRecipeManager();
         RecipeManagerAccessor acc = (RecipeManagerAccessor) manager;
 
-       
         Map<RecipeType<?>, Map<Identifier, Recipe<?>>> src = acc.getRecipes();
         Map<RecipeType<?>, Map<Identifier, Recipe<?>>> mutable = new HashMap<>(src.size());
         for (var e : src.entrySet()) {
             mutable.put(e.getKey(), new HashMap<>(e.getValue()));
         }
 
-        
         Map<Identifier, Recipe<?>> campfireOrig = src.get(RecipeType.CAMPFIRE_COOKING);
         if (campfireOrig == null || campfireOrig.isEmpty()) {
             acc.setRecipes(mutable);
@@ -52,19 +50,16 @@ public final class CampfireRecipePatch {
             if (!(r instanceof CampfireCookingRecipe original)) continue;
             if (original.getIngredients().isEmpty()) continue;
 
-            
             Ingredient in = original.getIngredients().get(0);
             ItemStack[] matches = in.getMatchingStacks();
             if (matches.length == 0) continue;
             if (!BurnedMeatHelper.isBurnInsteadItem(matches[0].getItem())) continue;
 
-            
             ItemStack cookedOut = original.getOutput(server.getRegistryManager());
 
             int cookTime = original.getCookTime();
             float xp     = original.getExperience();
 
-            
             ChanceCampfireRecipe replacement = new ChanceCampfireRecipe(
                     id,
                     CookingRecipeCategory.FOOD,
@@ -78,7 +73,6 @@ public final class CampfireRecipePatch {
             campfireMut.put(id, replacement);
         }
 
-        
         acc.setRecipes(mutable);
     }
 }

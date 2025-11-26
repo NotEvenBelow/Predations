@@ -1,3 +1,4 @@
+// Helper in item/BurnedMeatHelper for extraconfig idk why the fuck i put in it in item lmao
 package dev.foltz.predations.mixin.burnedmeat;
 
 import dev.foltz.predations.item.BurnedMeatHelper;
@@ -21,7 +22,7 @@ import java.util.Optional;
 @Mixin(CampfireBlockEntity.class)
 public abstract class CampfireBurnMixin {
     private static final Random RNG = Random.create();
-    private static Item PREDATIONS_BURNED_MEAT = null; 
+    private static Item PREDATIONS_BURNED_MEAT = null; // Cache the item
 
     private Item getBurnedMeatItem() {
         if (PREDATIONS_BURNED_MEAT == null) {

@@ -1,3 +1,4 @@
+// idk why the fuck i did this even though there's one feature in predations.json i already did that also did this💀
 package dev.foltz.predations.squid;
 
 import dev.foltz.predations.config.ExtraConfig;
@@ -5,7 +6,9 @@ import dev.foltz.predations.mixin.entity.MobEntityAccessor;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerEntityEvents;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.ai.goal.FleeEntityGoal;
+import net.minecraft.entity.passive.GlowSquidEntity;
 import net.minecraft.entity.passive.SchoolingFishEntity;
+import net.minecraft.entity.passive.SquidEntity;
 
 import java.util.Set;
 
@@ -18,13 +21,17 @@ public final class FishFleeInstaller {
 
     public static void register() {
         ServerEntityEvents.ENTITY_LOAD.register((entity, world) -> {
-            var cfg = ExtraConfig.get().predatorySquid;
+            var cfg = ExtraConfig.get().predSquid;
             if (!cfg.fishFleeSquidLikePlayer) return;
             if (!(entity instanceof SchoolingFishEntity fish)) return;
             if (!FISH_TYPES.contains(entity.getType())) return;
 
             int dist = Math.max(1, cfg.fishFleeDistance);
             var goalSel = ((MobEntityAccessor) fish).getGoalSelector();
+
+            goalSel.add(1, new FleeEntityGoal<>(fish, SquidEntity.class, dist, 1.2, 1.6));
+            goalSel.add(1, new FleeEntityGoal<>(fish, GlowSquidEntity.class, dist, 1.2, 1.6));
+
             goalSel.add(1, new FleeEntityGoal<>(fish, PredatorySquidEntity.class, dist, 1.2, 1.6));
             goalSel.add(1, new FleeEntityGoal<>(fish, PredatoryGlowSquidEntity.class, dist, 1.2, 1.6));
         });

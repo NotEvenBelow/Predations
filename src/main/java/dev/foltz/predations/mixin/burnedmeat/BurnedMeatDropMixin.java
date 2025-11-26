@@ -1,3 +1,4 @@
+// Helper in item/BurnedMeatHelper for extraconfig idk why the fuck i put in it in item lmao
 package dev.foltz.predations.mixin.burnedmeat;
 
 import dev.foltz.predations.item.BurnedMeatHelper;

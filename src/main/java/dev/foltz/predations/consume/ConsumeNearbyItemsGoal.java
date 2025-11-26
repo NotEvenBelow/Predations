@@ -1,9 +1,12 @@
 package dev.foltz.predations.consume;
 
 import dev.foltz.predations.config.ConfigManager;
+import dev.foltz.predations.config.ConfigManager.ConsumptionEffectEntry;
+import static dev.foltz.predations.config.ConfigManager.getFullHealthBuffs;
+
 import net.minecraft.entity.ItemEntity;
 import net.minecraft.entity.effect.StatusEffectInstance;
-import net.minecraft.entity.effect.StatusEffects;
+import net.minecraft.entity.effect.StatusEffect;
 import net.minecraft.entity.mob.PathAwareEntity;
 import net.minecraft.entity.ai.goal.Goal;
 import net.minecraft.item.ItemStack;
@@ -14,6 +17,7 @@ import net.minecraft.util.Identifier;
 import net.minecraft.util.math.Box;
 
 import java.util.EnumSet;
+import java.util.List;
 import java.util.WeakHashMap;
 
 public class ConsumeNearbyItemsGoal extends Goal {
@@ -46,21 +50,31 @@ public class ConsumeNearbyItemsGoal extends Goal {
             Identifier iid = Registries.ITEM.getId(stack.getItem());
             if (!ConfigManager.isConsumableItem(mob, iid)) continue;
 
-            // consume exactly 1
             stack.decrement(1);
             if (stack.isEmpty()) ie.discard();
 
             if (mob.getHealth() < mob.getMaxHealth()) {
-                // heal if not full
                 float hearts = ConfigManager.consumeHealHearts(mob);
                 mob.heal(Math.max(0f, hearts) * 2f);
             } else {
-                // already full health → give buffs
-                mob.addStatusEffect(new StatusEffectInstance(StatusEffects.STRENGTH, 800, 0)); // 10s, level 1
-                mob.addStatusEffect(new StatusEffectInstance(StatusEffects.SPEED, 800, 0));    // 10s, level 1
+                List<ConsumptionEffectEntry> buffs = getFullHealthBuffs(mob);
+                for (var entry : buffs) {
+                    if (entry.effectId == null || entry.effectId.isEmpty()) continue;
+
+                    StatusEffect effect = Registries.STATUS_EFFECT.get(new Identifier(entry.effectId));
+                    if (effect != null) {
+                        mob.addStatusEffect(new StatusEffectInstance(
+                                effect,
+                                entry.durationSeconds * 20,
+                                entry.amplifier,
+                                false,
+                                true,
+                                true)
+                        );
+                    }
+                }
             }
 
-            // sound
             mob.getWorld().playSound(
                     null,
                     mob.getBlockPos(),

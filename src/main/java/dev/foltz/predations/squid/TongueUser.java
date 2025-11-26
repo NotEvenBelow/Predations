@@ -9,3 +9,4 @@ public interface TongueUser {
     @Nullable LivingEntity getTongueTarget();
     boolean isTongueActive();
 }
+// UNUSED

@@ -1,4 +1,4 @@
-/** Might be needed in the future**/
+/** Might be needed in the future thanks ai for this lmao 🥀🥀**/
 
 
 /** package dev.foltz.predations.squid;
@@ -14,10 +14,8 @@ public final class VanillaSquidSwap {
 
     public static void register() {
         ServerEntityEvents.ENTITY_LOAD.register((Entity entity, ServerWorld world) -> {
-            // Off switch: only if your feature is enabled
             if (!ExtraConfig.get().predatorySquid.enabled) return;
 
-            // Only swap exact vanilla types.
             if (entity.getType() == EntityType.SQUID) {
                 swap(entity, world, ModSquidEntities.PREDATORY_SQUID);
             } else if (entity.getType() == EntityType.GLOW_SQUID) {

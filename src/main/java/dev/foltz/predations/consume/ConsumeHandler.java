@@ -8,7 +8,6 @@ import net.minecraft.entity.mob.MobEntity;
 import net.minecraft.entity.mob.PathAwareEntity;
 import net.minecraft.server.world.ServerWorld;
 
-
 public final class ConsumeHandler {
     private ConsumeHandler() {}
 

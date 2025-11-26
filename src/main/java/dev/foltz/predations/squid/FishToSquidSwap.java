@@ -17,7 +17,7 @@ public final class FishToSquidSwap {
 
     public static void register() {
         ServerEntityEvents.ENTITY_LOAD.register((Entity entity, ServerWorld world) -> {
-            var cfg = ExtraConfig.get().predatorySquid;
+            var cfg = ExtraConfig.get().predSquid;
             if (cfg.replaceChance <= 0) return;
 
             if (FISH_TYPES.contains(entity.getType())) {

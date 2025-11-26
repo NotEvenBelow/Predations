@@ -1,4 +1,4 @@
-package dev.foltz.predations.ARFY;
+/**package dev.foltz.predations.ARFY;
 
 import net.minecraft.entity.ai.NoPenaltyTargeting;
 import net.minecraft.entity.ai.goal.Goal;
@@ -30,9 +30,13 @@ public class RunAwayFromHostilesOnAttackGoal extends Goal {
         this.nearSpeed = nearSpeed;
         this.distance = Math.max(1, distance);
         this.ratio = ratio;
-        // use ARFYInstaller helpers instead of ExtraConfig
-        this.safeDistance = Math.max(this.distance, (float) (this.distance * ARFYInstaller.fleeSafeMult()));
-        this.repathCooldown = ARFYInstaller.fleeRepathCooldown();
+
+
+        float fleeSafeMult = 1.5f;
+        int fleeRepathCooldown = 20;
+
+        this.safeDistance = Math.max(this.distance, (float) (this.distance * fleeSafeMult));
+        this.repathCooldown = fleeRepathCooldown;
         this.setControls(EnumSet.of(Control.MOVE));
     }
 
@@ -40,6 +44,7 @@ public class RunAwayFromHostilesOnAttackGoal extends Goal {
     public boolean canStart() {
         long now = mob.getWorld().getTime();
         if (!AttackMemory.isActive(mob, now)) return false;
+
         AttackMemory.maybeRefresh(mob, now, repathCooldown);
         cachedThreatPos = AttackMemory.attackerPos(mob, now);
         if (cachedThreatPos == null) return false;
@@ -107,4 +112,4 @@ public class RunAwayFromHostilesOnAttackGoal extends Goal {
         lastRepathTick = now;
         return true;
     }
-}
+} **/

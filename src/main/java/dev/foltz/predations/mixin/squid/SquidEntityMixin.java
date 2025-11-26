@@ -6,9 +6,9 @@ import dev.foltz.predations.squid.ai.HeadSuckGoal;
 import dev.foltz.predations.mixin.entity.MobEntityAccessor;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.attribute.EntityAttributeInstance;
 import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.entity.passive.SquidEntity;
-import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.world.World;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;
@@ -19,10 +19,8 @@ import net.minecraft.text.Text;
 import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.damage.DamageTypes;
 
-import java.util.List;
 import java.util.UUID;
 
-@SuppressWarnings("unchecked")
 @Mixin(SquidEntity.class)
 public abstract class SquidEntityMixin extends LivingEntity implements HeadSuckable {
     @Unique private boolean predation$latched;
@@ -35,60 +33,38 @@ public abstract class SquidEntityMixin extends LivingEntity implements HeadSucka
 
     @Inject(method = "initGoals", at = @At("TAIL"))
     private void predation$initCustom(CallbackInfo ci) {
-        // add predatory AI if enabled
-        if (ExtraConfig.get().predatorySquid.enabled) {
-            ((MobEntityAccessor)(Object)this).getGoalSelector()
-                    .add(1, new HeadSuckGoal((SquidEntity)(Object)this));
-        }
+        EntityType<?> type = this.getType();
+        if (type == EntityType.SQUID || type == EntityType.GLOW_SQUID) {
 
-        // 🟢 set health once from config
-        SquidEntity self = (SquidEntity)(Object)this;
-        ExtraConfig.PredatorySquidConfig cfg = ExtraConfig.get().predatorySquid;
-        if (self.getType() == EntityType.GLOW_SQUID) {
-            self.getAttributeInstance(EntityAttributes.GENERIC_MAX_HEALTH)
-                    .setBaseValue(cfg.glowSquidMaxHealth);
-        } else {
-            self.getAttributeInstance(EntityAttributes.GENERIC_MAX_HEALTH)
-                    .setBaseValue(cfg.squidMaxHealth);
-        }
-        self.setHealth(self.getMaxHealth());
-    }
-
-    @Inject(method = "tickMovement", at = @At("HEAD"))
-    private void predation$togglePredatorIfNearPlayer(CallbackInfo ci) {
-        if (!ExtraConfig.get().predatorySquid.enabled) return;
-
-        SquidEntity self = (SquidEntity)(Object)this;
-        var selector = ((MobEntityAccessor)(Object)this).getGoalSelector();
-
-        List<ServerPlayerEntity> players = self.getWorld().getEntitiesByClass(
-                ServerPlayerEntity.class,
-                self.getBoundingBox().expand(48),
-                p -> !p.isSpectator() && p.isAlive()
-        );
-
-        boolean hasGoal = selector.getGoals().stream()
-                .anyMatch(g -> g.getGoal() instanceof HeadSuckGoal);
-
-        if (players.isEmpty()) {
-            if (hasGoal) {
-                selector.getGoals().removeIf(g -> g.getGoal() instanceof HeadSuckGoal);
-                this.predation$latched = false;
-                this.predation$tongueActive = false;
-                this.predation$targetUuid = null;
-                if (self.hasVehicle()) self.stopRiding();
+            if (ExtraConfig.get().predSquid.enabled) {
+                ((MobEntityAccessor)this).getGoalSelector()
+                        .add(1, predation$createGoal((SquidEntity)(Object)this));
             }
-        } else {
-            if (!hasGoal) {
-                selector.add(1, new HeadSuckGoal(self));
+
+            SquidEntity self = (SquidEntity)(Object)this;
+            ExtraConfig.PredatorySquidConfig cfg = ExtraConfig.get().predSquid;
+
+            EntityAttributeInstance healthAttr = self.getAttributeInstance(EntityAttributes.GENERIC_MAX_HEALTH);
+            if (healthAttr != null) {
+                if (self.getType() == EntityType.GLOW_SQUID) {
+                    healthAttr.setBaseValue(cfg.glowSquidMaxHealth);
+                } else {
+                    healthAttr.setBaseValue(cfg.squidMaxHealth);
+                }
             }
+            self.setHealth(self.getMaxHealth());
         }
     }
 
-    // suffocation immunity only while latched
+    @SuppressWarnings("unchecked")
+    @Unique
+    private static <T extends SquidEntity & HeadSuckable> HeadSuckGoal<T> predation$createGoal(SquidEntity squid) {
+        return new HeadSuckGoal<>((T) squid);
+    }
+
     @Override
     public boolean isInsideWall() {
-        return this.isLatched() ? false : super.isInsideWall();
+        return !this.isLatched() && super.isInsideWall();
     }
 
     @Override
@@ -101,17 +77,22 @@ public abstract class SquidEntityMixin extends LivingEntity implements HeadSucka
         super.onDeath(source);
         if (source.isOf(DamageTypes.LAVA)) {
             String name = this.getType() == EntityType.GLOW_SQUID ? "Glow Squid" : "Squid";
-            this.getWorld().getServer().getPlayerManager().broadcast(
-                    Text.literal(name + ": nah I hate water, lava is better and warmer"),
-                    false
-            );
+            var server = this.getWorld().getServer();
+            if (server != null) {
+                var playerManager = server.getPlayerManager();
+                if (playerManager != null) {
+                    playerManager.broadcast(
+                            Text.literal(name + ": nah I hate water, lava is better and warmer"),
+                            false
+                    );
+                }
+            }
         }
     }
 
     @Override
     protected int getNextAirOnLand(int air) {
         if (this.isLatched()) {
-            // Always reset to max while latched
             return this.getMaxAir();
         }
         return super.getNextAirOnLand(air);

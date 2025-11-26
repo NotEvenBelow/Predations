@@ -1,5 +1,5 @@
-/** This is a joke, it might  be glitchy idrc, i keep it bc i love the animation, dont ask me why lmao **/
 package dev.foltz.predations.squid;
+
 import dev.foltz.predations.squid.ai.HeadSuckGoal;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.ai.goal.LookAtEntityGoal;
@@ -18,7 +18,7 @@ public class PredatoryGlowSquidEntity extends GlowSquidEntity implements HeadSuc
     private UUID targetUuid;
 
     public PredatoryGlowSquidEntity(EntityType<? extends GlowSquidEntity> type, World world) {
-        super(type, world); 
+        super(type, world);
     }
 
     @Override
@@ -36,7 +36,6 @@ public class PredatoryGlowSquidEntity extends GlowSquidEntity implements HeadSuc
                 .add(EntityAttributes.GENERIC_ATTACK_DAMAGE, 2.0);
     }
 
- 
     @Override public void setLatched(boolean latched) { this.latched = latched; }
     @Override public boolean isLatched() { return latched; }
 

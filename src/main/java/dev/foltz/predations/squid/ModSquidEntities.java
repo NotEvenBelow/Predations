@@ -1,3 +1,4 @@
+// This is a joke mob i added because the animation is way too good for my mental health while developing this
 package dev.foltz.predations.squid;
 
 import dev.foltz.predations.PredationsMod;
@@ -37,14 +38,10 @@ public final class ModSquidEntities {
                         .build()
         );
 
-        
         FabricDefaultAttributeRegistry.register(PREDATORY_SQUID, PredatorySquidEntity.createAttributes());
         FabricDefaultAttributeRegistry.register(PREDATORY_GLOW_SQUID, PredatoryGlowSquidEntity.createAttributes());
 
-        if (ExtraConfig.get().predatorySquid.enabled) {
-           
-            BiomeModifications.addSpawn(BiomeSelectors.all(), SpawnGroup.WATER_CREATURE, PREDATORY_SQUID, 10, 1, 3);
-            BiomeModifications.addSpawn(BiomeSelectors.all(), SpawnGroup.WATER_CREATURE, PREDATORY_GLOW_SQUID, 8, 1, 2);
+        if (ExtraConfig.get().predSquid.enabled) {
 
             SpawnRestriction.register(
                     PREDATORY_SQUID,

@@ -1,4 +1,4 @@
-// dev/foltz/predations/mixin/burnedmeat/RecipeManagerAccessor.java
+// Helper in item/BurnedMeatHelper for extraconfig idk why the fuck i put in it in item lmao
 package dev.foltz.predations.mixin.burnedmeat;
 
 import org.spongepowered.asm.mixin.Mixin;

@@ -10,7 +10,6 @@ import net.minecraft.registry.DynamicRegistryManager;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.random.Random;
 
-
 public final class ChanceCampfireRecipe extends CampfireCookingRecipe {
     private final float burnChance;
     private final ItemStack cookedOut;

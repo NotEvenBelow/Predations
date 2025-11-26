@@ -4,7 +4,8 @@
   "compatibilityLevel": "JAVA_17",
 
   "client": [
-
+"rabies.ClientEntityGlowMixin",
+    "guanoAndBoneMeal.FertilizerRenderMixin"
   ],
 
   "injectors": { "defaultRequire": 1 }

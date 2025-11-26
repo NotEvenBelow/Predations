@@ -1,6 +1,5 @@
 package dev.foltz.predations.secret;
 
-
 public final class KnockbackContext {
     private static final ThreadLocal<Boolean> NO_KB = ThreadLocal.withInitial(() -> Boolean.FALSE);
 

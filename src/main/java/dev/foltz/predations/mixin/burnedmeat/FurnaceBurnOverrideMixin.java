@@ -1,3 +1,4 @@
+// Helper in item/BurnedMeatHelper for extraconfig idk why the fuck i put in it in item lmao
 package dev.foltz.predations.mixin.burnedmeat;
 
 import dev.foltz.predations.item.BurnedMeatHelper;
@@ -33,7 +34,8 @@ public abstract class FurnaceBurnOverrideMixin {
         // --- DEBUG LINE 1 ---
         System.out.println("[Predations DEBUG] Running replaceRecipes (hooked into RecipeManager.apply)...");
 
-        // --- DEBUG LINE ---
+        // --- !! CRITICAL DEBUG LINE !! ---
+        // Let's check what the config *actually* says at this exact moment.
         boolean configEnabled = BurnedMeatHelper.onlySmokerGivesCookedMeat();
         System.out.println("[Predations DEBUG] BurnedMeatHelper.onlySmokerGivesCookedMeat() returned: " + configEnabled);
 
@@ -53,12 +55,13 @@ public abstract class FurnaceBurnOverrideMixin {
             return;
         }
 
-        
+        // This is a safer pattern. We build a list of replacements first,
+        // then apply them all at the end.
         Map<Identifier, Recipe<?>> newBurnedRecipes = new HashMap<>();
         int checked = 0;
         int found = 0;
 
-       
+        // Get the *original* smelting map that was just loaded
         Map<Identifier, Recipe<?>> originalSmeltingMap = this.recipes.getOrDefault(RecipeType.SMELTING, Map.of());
 
         for (Recipe<?> recipe : originalSmeltingMap.values()) {
@@ -76,7 +79,8 @@ public abstract class FurnaceBurnOverrideMixin {
             for (ItemStack stack : inputIngredient.getMatchingStacks()) {
                 Item item = stack.getItem();
 
-                // --- DEBUG LINE  ---
+                // --- !! CRITICAL DEBUG LINE !! ---
+                // Let's log if we're checking beef
                 if (item == Items.BEEF) {
                     boolean isBeefInList = BurnedMeatHelper.isBurnInsteadItem(item);
                     System.out.println("[Predations DEBUG] Checking BEEF. Is it in 'burnInsteadItems'? " + isBeefInList);
@@ -111,20 +115,20 @@ public abstract class FurnaceBurnOverrideMixin {
 
         if (found > 0) {
             try {
-                
+                // Now, we apply the changes
                 Map<RecipeType<?>, Map<Identifier, Recipe<?>>> newMasterMap = new HashMap<>(this.recipes);
-                Map<Identifier, Recipe<?>> newSmeltingMap = new HashMap<>(originalSmeltingMap); 
+                Map<Identifier, Recipe<?>> newSmeltingMap = new HashMap<>(originalSmeltingMap); // Make a new mutable map
 
-              
+                // Overwrite the originals with our burned versions
                 newSmeltingMap.putAll(newBurnedRecipes);
 
-                
+                // Put the modified smelting map back into the master map
                 newMasterMap.put(RecipeType.SMELTING, newSmeltingMap);
 
-                
+                // Set the RecipeManager's 'recipes' field to our modified map
                 this.recipes = newMasterMap;
 
-                // --- SUCCESS MESSAGE ---
+                // --- THIS IS THE SUCCESS MESSAGE ---
                 System.out.println("[Predations] Successfully replaced " + found + " furnace recipes with burned_meat.");
 
             } catch (Exception e) {

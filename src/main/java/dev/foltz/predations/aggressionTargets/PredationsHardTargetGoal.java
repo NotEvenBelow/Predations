@@ -1,4 +1,4 @@
-package dev.foltz.predations.ARFY;
+package dev.foltz.predations.aggressionTargets;
 
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.ai.goal.Goal;
@@ -13,7 +13,7 @@ import java.util.EnumSet;
 import java.util.List;
 import java.util.Set;
 
-/** Hard targeter using config IDs instead of class reflection. */
+
 public class PredationsHardTargetGoal extends Goal {
     private static final boolean DEBUG = false;
 

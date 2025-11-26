@@ -10,7 +10,6 @@ public final class KnockbackHelper {
     private KnockbackHelper() {
     }
 
-
     public static boolean noKnockbackAll() {
         return ExtraConfig.get().secret.noKnockbackAll;
     }

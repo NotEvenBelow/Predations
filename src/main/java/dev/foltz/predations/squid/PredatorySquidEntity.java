@@ -1,5 +1,3 @@
-/** This is a joke, it might  be glitchy idrc, i keep it bc i love the animation, dont ask me why lmao **/
-
 package dev.foltz.predations.squid;
 
 import dev.foltz.predations.squid.ai.HeadSuckGoal;
@@ -20,12 +18,12 @@ public class PredatorySquidEntity extends SquidEntity implements HeadSuckable {
     private UUID targetUuid;
 
     public PredatorySquidEntity(EntityType<? extends SquidEntity> type, World world) {
-        super(type, world); 
+        super(type, world);
     }
 
     @Override
     protected void initGoals() {
-        super.initGoals(); 
+        super.initGoals(); // vanilla squid goals
         this.goalSelector.add(1, new HeadSuckGoal<>(this));
         this.goalSelector.add(5, new SwimAroundGoal(this, 1.0, 10));
         this.goalSelector.add(6, new LookAtEntityGoal(this, PlayerEntity.class, 6.0f));
@@ -38,7 +36,6 @@ public class PredatorySquidEntity extends SquidEntity implements HeadSuckable {
                 .add(EntityAttributes.GENERIC_ATTACK_DAMAGE, 2.0);
     }
 
-    
     @Override public void setLatched(boolean latched) { this.latched = latched; }
     @Override public boolean isLatched() { return latched; }
 

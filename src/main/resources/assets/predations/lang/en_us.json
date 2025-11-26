@@ -4,5 +4,18 @@
   "item.predations.fox_feather": "Fox's Feather",
   "item.predations.fox_talisman": "Fox's Talisman",
   "entity.predations.predatory_squid": "This is the correct way to swim",
-  "entity.predations.predatory_glow_squid": "This is the correct way to swim (but glow)"
+  "entity.predations.predatory_glow_squid": "This is the correct way to swim (but glow)",
+  "item.predations.villager_meat": "Raw Villager Meat",
+  "item.predations.cooked_villager_meat": "Cooked Villager Meat",
+  "advancements.predations.pufferfish_jackpot.title": "99% Gamblers Quit Before Jackpot",
+  "advancements.predations.pufferfish_jackpot.description": "Encounter a rare chance where pufferfish give you positive effects... along with negative.",
+  "effect.predations.kuru": "Kuru",
+"item.predations.diddy_milk": "Diddy's Milk",
+  "item.predations.splash_potion_of_curing": "Splash Potion of Curing",
+  "entity.predations.thrown_potion_of_curing": "Splash Potion of Curing",
+  "item.predations.life_ritual": "Life Ritual",
+ "effect.predations.rabies": "Rabies",
+"item.predations.guano": "Guano",
+"item.predations.guano_fertilizer": "Guano Fertilizer"
+
 }

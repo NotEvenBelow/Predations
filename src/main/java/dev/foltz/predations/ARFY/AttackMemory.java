@@ -1,4 +1,5 @@
-package dev.foltz.predations.ARFY;
+
+/**package dev.foltz.predations.ARFY;
 
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.util.math.Vec3d;
@@ -41,9 +42,10 @@ public final class AttackMemory {
         if (r == null) return;
         if (nowTick - r.lastUpdateTick < cooldownTicks) return;
         LivingEntity a = r.attackerRef != null ? r.attackerRef.get() : null;
+
         if (a != null && a.isAlive()) {
             r.lastKnownPos = a.getPos();
             r.lastUpdateTick = nowTick;
         }
     }
-}
+} **/

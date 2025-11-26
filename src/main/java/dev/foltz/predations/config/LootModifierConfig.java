@@ -205,6 +205,18 @@ public final class LootModifierConfig {
         glowSquid.drops.add(glowDiamond);
         c.entities.put("minecraft:glow_squid", glowSquid);
 
+        // ---- Villager  ----
+        Rule villager = new Rule();
+        villager.enabled = true;
+        Drop villagerMeat = new Drop();
+        villagerMeat.item = "predations:villager_meat";
+        villagerMeat.itemDroppedOnFire = "predations:cooked_villager_meat";
+        villagerMeat.chance = 1.0f;
+        villagerMeat.min = 1.0f;
+        villagerMeat.max = 2.0f;
+        villager.drops.add(villagerMeat);
+        c.entities.put("minecraft:villager", villager);
+
         return c;
     }
 

@@ -12,12 +12,12 @@ public class PeakComedySquidSpawnHandler {
         ServerEntityEvents.ENTITY_LOAD.register((entity, world) -> {
             if (!(entity instanceof SquidEntity squid)) return;
 
-            double squidChance = ExtraConfig.get().predatorySquid.peakComedySquidChance;
+            double squidChance = ExtraConfig.get().predSquid.peakComedySquidChance;
             if (squidChance > 0 && world.getRandom().nextDouble() < squidChance) {
                 BlockPos pos = squid.getBlockPos();
                 squid.discard();
 
-                double glowChance = ExtraConfig.get().predatorySquid.peakComedyGlowSquidChance;
+                double glowChance = ExtraConfig.get().predSquid.peakComedyGlowSquidChance;
                 if (glowChance > 0 && world.getRandom().nextDouble() < glowChance) {
                     ModSquidEntities.PREDATORY_GLOW_SQUID.spawn(
                             world, null, null, pos,

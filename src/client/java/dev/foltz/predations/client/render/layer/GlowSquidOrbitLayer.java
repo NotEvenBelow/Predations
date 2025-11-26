@@ -22,7 +22,7 @@ public class GlowSquidOrbitLayer<E extends GlowSquidEntity> extends FeatureRende
                        float tickDelta, float customAngle, float headYaw, float headPitch) {
         if (!DebugConfig.get().orbitEnabled) return;
 
-        double expand = Math.max(0.0, ExtraConfig.get().predatorySquid.latchRangeBlocks);
+        double expand = Math.max(0.0, ExtraConfig.get().predSquid.latchRangeBlocks);
         var box = squid.getBoundingBox().expand(expand);
 
         float minX = (float)(box.minX - squid.getX());

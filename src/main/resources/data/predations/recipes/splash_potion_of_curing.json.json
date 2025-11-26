@@ -1,0 +1,15 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "minecraft:splash_potion"
+    },
+    {
+      "item": "predations:life_ritual"
+    }
+  ],
+  "result": {
+    "item": "predations:splash_potion_of_curing",
+    "count": 1
+  }
+}
