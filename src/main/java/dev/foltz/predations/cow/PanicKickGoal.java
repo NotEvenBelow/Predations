@@ -42,13 +42,11 @@ public class PanicKickGoal extends net.minecraft.entity.ai.goal.Goal {
 
         long now = mob.getWorld().getTime();
 
-        // 1. Check Physical Damage (Health Drop)
         detectDamageAndRefreshWindow();
 
-        // 2. RESTORED: Check AttackMemory (Milking Trigger)
-        // If AttackMemory is active, ensure the kick window is open for at least 20 ticks
+
         if (AttackMemory.isActive(mob, now)) {
-            // We set a minimum active time to allow the goal to start
+
             if (activeUntil < now + 20) {
                 activeUntil = now + 20;
             }
@@ -79,10 +77,6 @@ public class PanicKickGoal extends net.minecraft.entity.ai.goal.Goal {
                 : Math.max(1, ExtraConfig.angryDefaultKickCooldown());
         nextKick = now + cd;
 
-        // Note: AttackMemory.mark MUST be called by Milking/Damage trigger,
-        // using the desired duration (runTimeinTick). We don't mark here unless needed.
-
-        // Damage Calculation
         float hearts;
         Difficulty diff = world.getDifficulty();
         if (angry != null) {
@@ -97,7 +91,6 @@ public class PanicKickGoal extends net.minecraft.entity.ai.goal.Goal {
         }
         float damage = hearts * 2.0f;
 
-        // Knockback Calculation
         double hVel = (angry != null && angry.kickHorizontalVelocity != null) ? angry.kickHorizontalVelocity : 0.28;
         double vVel = (angry != null && angry.kickVerticalVelocity != null) ? angry.kickVerticalVelocity : 1.2;
 
@@ -106,7 +99,6 @@ public class PanicKickGoal extends net.minecraft.entity.ai.goal.Goal {
         double kbX = horizontalDir.x * hVel;
         double kbZ = horizontalDir.z * hVel;
 
-        // Apply Hit
         target.damage(mob.getDamageSources().mobAttack(mob), damage);
         Vec3d tv = target.getVelocity();
         target.setVelocity(tv.x + kbX, Math.max(tv.y, vVel), tv.z + kbZ);
@@ -123,7 +115,6 @@ public class PanicKickGoal extends net.minecraft.entity.ai.goal.Goal {
         if (hp < lastHealth) {
             var angry = ExtraConfig.angryFor(mob);
 
-            // Uses kickActiveWindowTicks for the aggression window
             int kickWindow = (angry != null && angry.kickActiveWindowTicks != null)
                     ? angry.kickActiveWindowTicks
                     : 120;
@@ -169,8 +160,7 @@ public class PanicKickGoal extends net.minecraft.entity.ai.goal.Goal {
     }
 
     private boolean canSeeTarget(LivingEntity target) {
-        // ... raycast logic ... (Removed here to keep logic clean)
-        return true; // Simplified for close range kick to avoid raycast failures
+        return true;
     }
 
     private double getKickRange() {
