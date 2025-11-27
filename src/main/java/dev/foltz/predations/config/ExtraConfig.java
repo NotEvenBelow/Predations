@@ -322,7 +322,7 @@ public final class ExtraConfig {
         if (FILE.exists()) {
             try (FileReader r = new FileReader(FILE)) {
                 JsonReader reader = new JsonReader(r);
-                reader.setLenient(true); // Critical: Allows comments in the JSON
+                reader.setLenient(true); 
 
                 Model m = GSON.fromJson(reader, Model.class);
                 if (m == null) m = new Model();
