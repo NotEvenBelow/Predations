@@ -40,8 +40,7 @@ public final class AttackMemory {
         Record r = MAP.get(prey);
         return (r != null) ? r.lastKnownPos : null;
     }
-
-    // NEW: Allows Goal to check if the memory is "Fresh" (trigger kick) or "Stale" (just run)
+    
     public static long getLastUpdateTick(LivingEntity prey) {
         Record r = MAP.get(prey);
         return (r != null) ? r.lastUpdateTick : -1L;
