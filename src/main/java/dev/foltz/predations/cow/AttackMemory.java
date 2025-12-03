@@ -40,7 +40,7 @@ public final class AttackMemory {
         Record r = MAP.get(prey);
         return (r != null) ? r.lastKnownPos : null;
     }
-    
+
     public static long getLastUpdateTick(LivingEntity prey) {
         Record r = MAP.get(prey);
         return (r != null) ? r.lastUpdateTick : -1L;

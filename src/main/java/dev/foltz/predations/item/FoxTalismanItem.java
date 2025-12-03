@@ -27,7 +27,7 @@ public class FoxTalismanItem extends Item {
         ServerTickEvents.END_SERVER_TICK.register(server -> tickTasks());
     }
 
-    // ---- tiny delayed scheduler (for spaced sounds) ----
+    // --------
     private static final Queue<DelayedTask> TASKS = new ArrayDeque<>();
     private static void schedule(Runnable r, int delayTicks) { TASKS.add(new DelayedTask(r, delayTicks)); }
     private static void tickTasks() {
@@ -47,17 +47,13 @@ public class FoxTalismanItem extends Item {
             var cfg = ExtraConfig.get().foxItems;
             if (!cfg.FoxTalismanFunctionEnabled) return TypedActionResult.pass(stack);
 
-            // cooldown
             user.getItemCooldownManager().set(this, Math.max(1, cfg.TalismanCooldowninSecond) * 20);
 
-            // 🟢 always grant squid immunity using PredatorySquidConfig
             int immunityTicks = 20 * ExtraConfig.get().foxItems.TalismanSquidImmunityTimeInSecond;
             TalismanImmunityTracker.setImmune(user, immunityTicks);
 
-            // also apply any extra configured status effects (except squid immunity)
             cfg.TalismanEffects.forEach(entry -> {
                 if ("squid_immunity".equals(entry.effectId)) {
-                    // skip, handled by config int above
                     return;
                 }
                 var effect = Registries.STATUS_EFFECT.get(new Identifier(entry.effectId));
@@ -71,7 +67,6 @@ public class FoxTalismanItem extends Item {
                 }
             });
 
-            // force-unlatch any squid currently attached to this player
             forceUnlatchNearbySquid(user, 8.0);
 
             // spaced glass sounds: 0, 0.3s, 0.6s
@@ -114,18 +109,14 @@ public class FoxTalismanItem extends Item {
             if (s instanceof HeadSuckable hs) {
                 var tgt = hs.getTargetUuid();
                 if (hs.isLatched() && tgt != null && tgt.equals(user.getUuid())) {
-                    // 1. Clean up the AI Memory using the new Targeting class
-                    // This removes the CLAIMED entry and sets the Cooldown.
                     HeadSuckTargeting.releaseTarget(s, user, false);
 
-                    // 2. Reset physical state
                     hs.setLatched(false);
                     hs.setTongueActive(false);
                     hs.setTargetUuid(null);
                     s.setNoGravity(false);
                     s.getNavigation().stop();
 
-                    // 3. Little nudge away
                     s.addVelocity(0, 0.4, 0);
                     s.velocityModified = true;
                 }

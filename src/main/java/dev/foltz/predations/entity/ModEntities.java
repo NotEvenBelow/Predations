@@ -10,7 +10,6 @@ import net.minecraft.registry.Registry;
 import net.minecraft.util.Identifier;
 
 public final class ModEntities {
-    // Make constructor private so it can't be instantiated
     private ModEntities() {}
 
     public static final EntityType<FamishedCowEntity> FAMISHED_COW =
@@ -34,18 +33,13 @@ public final class ModEntities {
                             .trackedUpdateRate(10)
                             .build()
             );
-    // -----------
+
 
     public static void register() {
-        // attributes
         FabricDefaultAttributeRegistry.register(FAMISHED_COW, FamishedCowEntity.createAttributes());
 
-        // spawn replacement
         FamishedCowEntity.registerSpawnReplacement(FAMISHED_COW);
 
-        // --- ADDED ---
-        // ThrownPotionOfCuringEntity has no attributes or spawns to register.
         System.out.println("[Predations][Init] ModEntities registered");
-        // -----------
     }
 }

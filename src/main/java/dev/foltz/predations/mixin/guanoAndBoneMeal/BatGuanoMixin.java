@@ -30,7 +30,7 @@ public abstract class BatGuanoMixin extends AmbientEntity {
         if (this.age > 0 && this.age % config.batGuanoRollIntervalInTick == 0) {
             if (this.random.nextDouble() < config.batGuanoDropChance) {
                 this.dropStack(new ItemStack(ModItems.GUANO));
-                this.playSound(SoundEvents.ENTITY_CHICKEN_EGG, 0.5F, 1.5F); // Small plop sound
+                this.playSound(SoundEvents.ENTITY_CHICKEN_EGG, 0.5F, 1.5F);
             }
         }
     }

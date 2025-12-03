@@ -115,6 +115,7 @@ public final class ConfigManager {
             save();
         }
 
+
         if (DATA.defaults == null) DATA.defaults = new Defaults();
         if (DATA.consumeDefaults == null) DATA.consumeDefaults = new ConsumptionDefaults();
         if (DATA.consume == null) DATA.consume = new LinkedHashMap<>();
@@ -122,6 +123,10 @@ public final class ConfigManager {
         if (DATA.runawayFromEntities == null) DATA.runawayFromEntities = new LinkedHashMap<>();
         if (DATA.entities == null) DATA.entities = new LinkedHashMap<>();
         if (DATA.forAllowLuresinEntities == null) DATA.forAllowLuresinEntities = new LinkedHashMap<>();
+    }
+    public static Config get() {
+        if (DATA == null) load();
+        return DATA;
     }
 
     public static void save() {

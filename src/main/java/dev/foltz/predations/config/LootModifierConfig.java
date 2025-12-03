@@ -23,9 +23,9 @@ public final class LootModifierConfig {
     }
 
     public static final class Drop {
-        public String item;               // normal drop
-        public String itemDroppedOnFire;  // override drop if mob was on fire
-        public float chance = 1.0f;       // 0..1
+        public String item;
+        public String itemDroppedOnFire;
+        public float chance = 1.0f;
         public float min = 1.0f;
         public float max = 1.0f;
     }

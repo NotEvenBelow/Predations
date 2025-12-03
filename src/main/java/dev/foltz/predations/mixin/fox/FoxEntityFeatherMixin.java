@@ -28,7 +28,6 @@ public abstract class FoxEntityFeatherMixin extends AnimalEntity {
 
     @Inject(method = "tickMovement", at = @At("HEAD"))
     private void predations$tickFeather(CallbackInfo ci) {
-        // server-side only
         if (this.getWorld().isClient()) return;
 
         var cfgRoot = ExtraConfig.get();

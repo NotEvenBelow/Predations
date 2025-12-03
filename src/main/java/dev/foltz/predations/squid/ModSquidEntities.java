@@ -1,4 +1,4 @@
-// This is a joke mob i added because the animation is way too good for my mental health while developing this
+
 package dev.foltz.predations.squid;
 
 import dev.foltz.predations.PredationsMod;

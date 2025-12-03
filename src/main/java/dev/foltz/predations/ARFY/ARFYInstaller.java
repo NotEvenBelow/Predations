@@ -6,6 +6,7 @@ import dev.foltz.predations.mixin.entity.MobEntityAccessor;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerEntityEvents;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.ai.goal.TemptGoal;
+import net.minecraft.entity.mob.HostileEntity;
 import net.minecraft.entity.mob.MobEntity;
 import net.minecraft.entity.mob.PathAwareEntity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -14,7 +15,7 @@ import net.minecraft.recipe.Ingredient;
 import net.minecraft.server.world.ServerWorld;
 
 import java.util.*;
-import dev.foltz.predations.aggressionTargets.AggressionHelper; // <-- NEW IMPORT
+import dev.foltz.predations.aggressionTargets.AggressionHelper;
 
 public final class ARFYInstaller {
     private ARFYInstaller() {}
@@ -28,9 +29,14 @@ public final class ARFYInstaller {
         if (!(entity instanceof PathAwareEntity path)) return;
         MobEntity mob = (MobEntity) path;
 
-        var goalSet = ((GoalSelectorAccessor) ((MobEntityAccessor) mob).getGoalSelector()).predations$getGoals();
-
         AggressionHelper.installAggressionGoals(path, mob);
+
+        if (mob instanceof HostileEntity) {
+            return;
+        }
+
+
+        var goalSet = ((GoalSelectorAccessor) ((MobEntityAccessor) mob).getGoalSelector()).predations$getGoals();
 
         goalSet.removeIf(pg -> pg.getGoal() instanceof RunAwayGoal<?> || pg.getGoal() instanceof DetectPlayerGoal<?>);
 

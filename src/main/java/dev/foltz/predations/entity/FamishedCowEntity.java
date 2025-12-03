@@ -43,29 +43,18 @@ public class FamishedCowEntity extends CowEntity {
 
     @Override
     protected void initGoals() {
-        // --- NEW LINGER AI (Idle Behavior) ---
         this.goalSelector.add(0, new SwimGoal(this));
-        // Priority 5: Wander. If not attacking, it will walk around.
         this.goalSelector.add(5, new WanderAroundFarGoal(this, 1.0));
-        // Priority 6: Watch Player.
         this.goalSelector.add(6, new LookAtEntityGoal(this, PlayerEntity.class, 6.0F));
-        // Priority 7: Idle Look.
         this.goalSelector.add(7, new LookAroundGoal(this));
-        // --- END NEW LINGER AI ---
 
-        // --- AGGRESSION AI ---
         this.goalSelector.add(2, new MeleeAttackGoal(this, 1.3, true));
 
-        // TARGETING:
-        // 1. Revenge: Always fight back if hit (Priority 1)
         this.targetSelector.add(1, new RevengeGoal(this));
 
-        // 2. Hunt: Find targets.
-        // Changed '10' to '40' (Reciprocal Chance).
-        // This reduces how often it scans for new targets, allowing it to "linger" more often between hunts.
         this.targetSelector.add(2, new ActiveTargetGoal<>(
                 this, LivingEntity.class, 40, true, true,
-                target -> !(target instanceof CowEntity) // Don't eat other cows
+                target -> !(target instanceof CowEntity)
         ));
     }
 

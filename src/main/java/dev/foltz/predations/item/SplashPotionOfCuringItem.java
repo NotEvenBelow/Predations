@@ -25,7 +25,6 @@ public class SplashPotionOfCuringItem extends Item {
         if (!world.isClient) {
             ThrownPotionOfCuringEntity potionEntity = new ThrownPotionOfCuringEntity(world, user);
 
-            // --- FIX: Explicitly set the item on the entity so it knows what to render ---
             potionEntity.setItem(itemStack);
 
             potionEntity.setVelocity(user, user.getPitch(), user.getYaw(), 0.0f, 0.7f, 1.0f);

@@ -38,13 +38,11 @@ public class KuruHandler {
                     setKuruStage(player, newStage);
                     applyStageEffects(player, newStage);
 
-                    // If player just entered Stage 3, reset the Stage 3 timer
                     if (newStage == 3) {
                         setKuruStage3Timer(player, 0);
                     }
                 }
 
-                // Stage 4 Kill Logic
                 if (currentStage == 3 && ExtraConfig.getKuruConfig().stage4Kill) {
                     int stage3Timer = getKuruStage3Timer(player);
                     stage3Timer++;
@@ -53,8 +51,6 @@ public class KuruHandler {
                     int killTimeTicks = ExtraConfig.getKuruConfig().stage3SurvivedKillSecond * 20;
 
                     if (stage3Timer >= killTimeTicks) {
-                        // We use player.kill().
-                        // The PlayerEntityMixin will handle the rest.
                         player.kill();
                     }
                 }
@@ -96,7 +92,6 @@ public class KuruHandler {
         }
     }
 
-    // ========== NBT METHODS ==========
 
     private static NbtCompound getPersistentData(LivingEntity entity) {
         IEntityDataSaver dataSaver = (IEntityDataSaver) entity;

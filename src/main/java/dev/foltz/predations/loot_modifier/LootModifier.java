@@ -22,12 +22,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 
-/**
- * Reads config/predation_loot_modifier.json and replaces entity loot tables per config.
- * - rule.enabled=false or missing -> keep vanilla
- * - rule.enabled=true with empty drops -> drop nothing
- * - rule.enabled=true with drops -> only configured items drop
- */
+
 public final class LootModifier {
     private static LootModifierConfig CFG;
     private static final Map<Identifier, LootModifierConfig.Rule> BY_LOOT_TABLE = new HashMap<>();

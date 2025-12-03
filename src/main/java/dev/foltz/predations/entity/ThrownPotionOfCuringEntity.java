@@ -1,7 +1,7 @@
 package dev.foltz.predations.entity;
 
 import dev.foltz.predations.config.ExtraConfig;
-import dev.foltz.predations.item.ModItems; // <-- ADDED IMPORT
+import dev.foltz.predations.item.ModItems;
 import dev.foltz.predations.mixin.villager.ZombieVillagerEntityAccessor;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
@@ -36,7 +36,6 @@ public class ThrownPotionOfCuringEntity extends ThrownItemEntity {
 
     @Override
     protected Item getDefaultItem() {
-        // --- FIX: Return the custom item, not vanilla SPLASH_POTION ---
         return ModItems.SPLASH_POTION_OF_CURING;
     }
 
@@ -47,16 +46,12 @@ public class ThrownPotionOfCuringEntity extends ThrownItemEntity {
             return;
         }
 
-        // Get config
         double range = ExtraConfig.getVillagerConfig().customCureSplashRange;
 
-        // Play splash sound
         this.getWorld().playSound(null, this.getBlockPos(), SoundEvents.ENTITY_SPLASH_POTION_BREAK, this.getSoundCategory(), 1.0f, this.getWorld().random.nextFloat() * 0.1f + 0.9f);
 
-        // Spawn particles
         this.getWorld().createExplosion(null, this.getX(), this.getY(), this.getZ(), 0.0f, World.ExplosionSourceType.NONE);
 
-        // Apply curing effect
         this.applyCureSplash(range);
 
         this.discard();

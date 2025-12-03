@@ -22,7 +22,7 @@ import java.util.Optional;
 @Mixin(CampfireBlockEntity.class)
 public abstract class CampfireBurnMixin {
     private static final Random RNG = Random.create();
-    private static Item PREDATIONS_BURNED_MEAT = null; // Cache the item
+    private static Item PREDATIONS_BURNED_MEAT = null;
 
     private Item getBurnedMeatItem() {
         if (PREDATIONS_BURNED_MEAT == null) {

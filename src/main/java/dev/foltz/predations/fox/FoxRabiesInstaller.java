@@ -31,11 +31,9 @@ public final class FoxRabiesInstaller {
         }
 
         try {
-            // 1. Determine Infection Status
             boolean alreadyInfected = fox.getCommandTags().contains(INFECTED_TAG);
             boolean becomingInfected = false;
 
-            // Only roll for new infection if not already infected
             if (!alreadyInfected) {
                 double chance = ExtraConfig.getRabiesConfig().naturalAggressiveFoxSpawnChance;
                 if (world.getRandom().nextDouble() < chance) {
@@ -43,21 +41,17 @@ public final class FoxRabiesInstaller {
                 }
             }
 
-            // 2. Apply Logic if Infected (Existing OR New)
             if (alreadyInfected || becomingInfected) {
 
-                // Apply tag if it's new
                 if (becomingInfected) {
                     fox.addCommandTag(INFECTED_TAG);
                 }
 
-                // --- FORCE STATES ---
                 fox.setSitting(false);
                 ((FoxEntityAccessor) fox).invokeSetSleeping(false);
                 fox.setCrouching(false);
                 ((FoxEntityAccessor) fox).invokeSetAggressive(true);
 
-                // --- PURGE COWARDICE (This now runs for ALL infected foxes) ---
                 GoalSelector goalSelector = ((MobEntityAccessor)fox).getGoalSelector();
                 Set<PrioritizedGoal> goals = ((GoalSelectorAccessor)goalSelector).predations$getGoals();
 
@@ -65,7 +59,6 @@ public final class FoxRabiesInstaller {
                 for (PrioritizedGoal pg : goals) {
                     Goal g = pg.getGoal();
                     String className = g.getClass().getName();
-                    // Check for Fleeing, Panic, and Avoidance
                     if (g instanceof FleeEntityGoal || g instanceof EscapeDangerGoal ||
                             className.contains("Avoid") || className.contains("Panic") ||
                             className.contains("Sit") || className.contains("Sleep")) {
@@ -73,7 +66,6 @@ public final class FoxRabiesInstaller {
                     }
                 }
 
-                // Remove the peaceful goals
                 for (PrioritizedGoal pg : toRemove) {
                     goalSelector.remove(pg.getGoal());
                 }
@@ -81,7 +73,6 @@ public final class FoxRabiesInstaller {
 
                 goalSelector.add(1, new MeleeAttackGoal(fox, 0.6, true));
 
-                // Priority 0: Target Selection
                 ((MobEntityAccessor)fox).getTargetSelector().add(0, new ActiveTargetGoal<>(
                         fox,
                         LivingEntity.class,

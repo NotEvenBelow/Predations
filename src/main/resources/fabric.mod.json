@@ -1,14 +1,14 @@
 {
   "schemaVersion": 1,
   "id": "predations",
-  "version": "0.0.2-BETA",
+  "version": "0.0.4-BETA",
   "name": "Predations",
   "description": "A comprehensive minecraft mod that overhaul most passive entities related features to either improve them or make the progression much harder and more dynamic.",
   "authors": [
     "NotEvenBelow"
   ],
   "contact": {
-    "homepage": "https://github.com/NotEvenBelow",
+    "homepage": "https://modrinth.com/mod/predations",
     "issues": "https://github.com/NotEvenBelow/Predations/issues"
   },
   "license": "LGPL-3.0-only",
@@ -20,6 +20,9 @@
     ],
     "client": [
       "dev.foltz.predations.client.PredationsModClient"
+    ],
+    "modmenu": [
+      "dev.foltz.predations.client.PredationsModMenuIntegration"
     ]
   },
   "mixins": [
@@ -29,6 +32,7 @@
   "depends": {
     "fabricloader": ">=0.14.0",
     "fabric": "*",
-    "minecraft": ">=1.20"
+    "minecraft": ">=1.20",
+    "java": ">=17"
   }
 }

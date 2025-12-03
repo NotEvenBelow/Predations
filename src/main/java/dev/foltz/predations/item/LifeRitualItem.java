@@ -16,7 +16,6 @@ public class LifeRitualItem extends Item {
 
     @Override
     public TypedActionResult<ItemStack> use(World world, PlayerEntity user, Hand hand) {
-        // 1. CHECK CONFIG
         ExtraConfig.VillagerConfig config = ExtraConfig.getVillagerConfig();
         if (config != null && !config.LifeRitualFunctionEnabled) {
             if (!world.isClient) {

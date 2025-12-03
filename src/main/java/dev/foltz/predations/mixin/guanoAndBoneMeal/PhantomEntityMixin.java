@@ -28,7 +28,6 @@ public class PhantomEntityMixin extends FlyingEntity {
 
         if (!config.enabled) return;
 
-        // --- 1. LEASH LOGIC ---
         if (config.phantomCanLeash) {
             Entity holder = this.getHoldingEntity();
             if (holder != null) {

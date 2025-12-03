@@ -22,14 +22,12 @@ public class FertilizerNetworking {
         ServerPlayNetworking.send(player, PACKET_ID, buf);
     }
 
-    // FIXED: Now accepts 'World' as a parameter
     public static void sendToTracking(World world, Chunk chunk, BlockPos pos, double multiplier) {
         if (world instanceof ServerWorld serverWorld) {
             PacketByteBuf buf = new PacketByteBuf(Unpooled.buffer());
             buf.writeBlockPos(pos);
             buf.writeDouble(multiplier);
 
-            // Send to all players tracking this chunk
             for (ServerPlayerEntity player : PlayerLookup.tracking(serverWorld, chunk.getPos())) {
                 ServerPlayNetworking.send(player, PACKET_ID, buf);
             }
