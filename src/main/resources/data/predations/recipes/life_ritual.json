@@ -1,0 +1,38 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "RWS",
+    "KEK",
+    "DMD"
+  ],
+  "key": {
+    "R": {
+      "item": "minecraft:rabbit_foot"
+    },
+    "W": {
+      "item": "minecraft:wither_skeleton_skull"
+    },
+    "S": {
+      "item": "minecraft:scute"
+    },
+    "K": {
+      "item": "minecraft:skeleton_skull"
+    },
+    "M": {
+      "item": "minecraft:skeleton_skull"
+    },
+    "E": {
+      "item": "minecraft:emerald"
+    },
+    "D": {
+      "item": "minecraft:diamond"
+    },
+    "M": {
+      "item": "minecraft:music_disc_5"
+    }
+  },
+  "result": {
+    "item": "predations:life_ritual",
+    "count": 1
+  }
+}
